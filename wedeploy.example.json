@@ -1,0 +1,6 @@
+{
+  "id": "my-app",
+  "env": {
+    "MONGODB_URI": "mongodb://xxx:xxx@xxx.com:11111/my-app-db"
+  }
+}

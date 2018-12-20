@@ -1,0 +1,29 @@
+{
+  "name": "shortify",
+  "version": "1.0.0",
+  "description": "Let your URLs more friendly",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_ENV=production node app.js",
+    "dev": "./node_modules/.bin/nodemon app.js"
+  },
+  "engines": {
+    "node": "=8.11.3"
+  },
+  "keywords": [
+    "url",
+    "shortener",
+    "friendly"
+  ],
+  "author": "davidalves1 <alves.david@outlook.com> (https://davidalves1.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "mongoose": "^5.2.15",
+    "mongoose-timestamp": "^0.6.0",
+    "nodemon": "^1.18.4",
+    "random-hash": "^4.0.1",
+    "restify": "^7.2.1",
+    "restify-plugins": "^1.6.0"
+  }
+}
