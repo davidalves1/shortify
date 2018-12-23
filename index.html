@@ -7,19 +7,27 @@
   <title>Shortfy</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <style>
+    .title {
+      text-align: center;
+    }
+    .result {
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
   <section class="section">
     <div class="container">
       <div class="columns is-mobile">
-        <div class="column is-one-third is-offset-one-third">
+        <div class="column is-one-third-desktop is-offset-one-third-desktop">
           <h1 class="title">
             Shortify
           </h1>
           <form action="#" id="mainForm">
             <div class="field">
               <div class="control">
-                <input type="text" class="input" id="url" placeholder="Cole a URL original aqui..." required>
+                <input type="text" class="input" id="url" placeholder="Cole a URL original aqui..." required />
               </div>
             </div>
             <div class="field">
@@ -27,27 +35,56 @@
                 <button class="button is-primary">Gerar URL</button>
               </div>
             </div>
-            <div class="field">
-              <div class="control">
-                <div id="result"></div>
-              </div>
-            </div>
           </form>
+          <div class="field has-addons result">
+            <div class="control is-expanded">
+              <input type="text" class="input" id="result" placeholder="URL encurtada!" />
+            </div>
+            <div class="control">
+              <button class="button is-info" id="copy" data-clipboard-target="#result">
+                <span id="copyText">Copiar</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
   <script>
+    // Add clipboard to button
+    new ClipboardJS('#copy');
+    const copy = document.querySelector('#copy');
+    const copyText = document.querySelector('#copyText');
+
+    copy.addEventListener('click', (el) => {
+      copyText.innerHTML = 'Copiado!';
+
+      setTimeout(() => {
+        copyText.innerHTML = 'Copiar';
+      }, 3000);
+    });
+
     const mainForm = document.querySelector('#mainForm');
     const url = document.querySelector('#url');
     const result = document.querySelector('#result');
 
-    mainForm.addEventListener('submit', (ev) => {
+    mainForm.addEventListener('submit', async (ev) => {
       ev.preventDefault();
 
-      fetch(`http://localhost:3001/${url.value}`)
+      const data = {url: url.value};
+
+      fetch(`http://localhost:3001/shortener`, {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          }),
+          body: JSON.stringify(data)
+        })
         .then(res => res.json())
-        .then(json => console.log(json))
+        .then(json => {
+          result.value = json.shorten
+        })
         .catch(err => console.error('erro', err));
     });
   </script>
