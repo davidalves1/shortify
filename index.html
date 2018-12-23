@@ -42,7 +42,7 @@
             </div>
             <div class="control">
               <button class="button is-info" id="copy" data-clipboard-target="#result">
-                <span id="copyText">Copiar</span>
+                Copiar
               </button>
             </div>
           </div>
@@ -55,14 +55,13 @@
     // Add clipboard to button
     new ClipboardJS('#copy');
     const copy = document.querySelector('#copy');
-    const copyText = document.querySelector('#copyText');
 
-    copy.addEventListener('click', (el) => {
-      copyText.innerHTML = 'Copiado!';
+    copy.addEventListener('click', () => {
+      copy.innerHTML = 'Copiado!';
 
       setTimeout(() => {
-        copyText.innerHTML = 'Copiar';
-      }, 3000);
+        copy.innerHTML = 'Copiar';
+      }, 1500);
     });
 
     const mainForm = document.querySelector('#mainForm');

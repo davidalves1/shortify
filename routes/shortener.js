@@ -6,7 +6,6 @@ const randomHash = require('random-hash');
 module.exports = server => {
   server.get('/:hash', async (req, res, next) => {
     try{
-      console.log('BUSCANDO URL');
       Shortener.findOne({code: req.params.hash}, (err, url) => {
         if (err || url === null) {
           console.error('api error', err);
@@ -41,10 +40,7 @@ module.exports = server => {
 
       const shortener = new Shortener(data);
       shortener.save((err, id) => {
-        console.log({ id });
-
         if (err) {
-          console.log('DEU ERRO NO CADASTRO');
           res.status(500);
           return res.json({ err });
         }
