@@ -32,7 +32,7 @@ server.use((req, res, next) => {
 
 // Routes
 server.get('/', function indexHTML(req, res, next) {
-  fs.readFile(__dirname + '/index.html', function (err, data) {
+  fs.readFile(__dirname + '/views/index.html', function (err, data) {
       if (err) {
         next(err);
       return;

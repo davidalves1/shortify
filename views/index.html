@@ -14,6 +14,15 @@
     .result {
       margin-top: 1rem;
     }
+    .notification {
+      margin-top: 1rem;
+    }
+    .show {
+      display: block;
+    }
+    .hide {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -36,7 +45,7 @@
               </div>
             </div>
           </form>
-          <div class="field has-addons result">
+          <div class="field has-addons result hide">
             <div class="control is-expanded">
               <input type="text" class="input" id="result" placeholder="URL encurtada!" />
             </div>
@@ -45,6 +54,10 @@
                 Copiar
               </button>
             </div>
+          </div>
+          <div class="notification is-danger hide">
+            <button class="delete" id="notificationClose"></button>
+            A URL informada não existe
           </div>
         </div>
       </div>
@@ -67,12 +80,28 @@
     const mainForm = document.querySelector('#mainForm');
     const url = document.querySelector('#url');
     const result = document.querySelector('#result');
+    const resultDiv = document.querySelector('.result');
+    const notification = document.querySelector('.notification');
+    const notificationClose = document.querySelector('#notificationClose');
+
+    window.addEventListener('load', () => {
+      const query = location.search.slice(1);
+
+      if (0 < query.search('404')) {
+        notification.classList.remove('hide');
+      }
+    });
+
+    notificationClose.addEventListener('click', () => {
+      notification.classList.add('hide');
+    });
 
     mainForm.addEventListener('submit', async (ev) => {
       ev.preventDefault();
 
       const data = {url: url.value};
 
+      // fetch(`http://localhost:3001/shortener`, {
       fetch(`https://app-shortify.wedeploy.io/shortener`, {
           method: 'POST',
           headers: new Headers({
@@ -82,6 +111,7 @@
         })
         .then(res => res.json())
         .then(json => {
+          resultDiv.classList.remove('hide');
           result.value = json.shorten
         })
         .catch(err => console.error('erro', err));

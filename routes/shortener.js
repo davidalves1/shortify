@@ -9,7 +9,7 @@ module.exports = server => {
       Shortener.findOne({code: req.params.hash}, (err, url) => {
         if (err || url === null) {
           console.error('api error', err);
-          res.redirect(301, config.base_url);
+          res.redirect(301, `${config.base_url}?code=404`, next);
           return;
         }
 
