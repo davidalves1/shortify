@@ -57,7 +57,7 @@
           </div>
           <div class="notification is-danger hide">
             <button class="delete" id="notificationClose"></button>
-            A URL informada não existe
+            <span id="error"></span>
           </div>
         </div>
       </div>
@@ -88,21 +88,28 @@
       const query = location.search.slice(1);
 
       if (0 < query.search('404')) {
-        notification.classList.remove('hide');
+        showError('A URL informada não existe');
       }
     });
 
     notificationClose.addEventListener('click', () => {
-      notification.classList.add('hide');
+      hideError();
     });
 
     mainForm.addEventListener('submit', async (ev) => {
       ev.preventDefault();
+      hideError();
+
+      const is_valid = await fetch(`https://app-shortify.herokuapp.com/shortener?url=${url.value}`);
+
+      if (is_valid.status !== 200) {
+        return showError('A URL informada não é válida');
+      }
 
       const data = {url: url.value};
 
       // fetch(`http://localhost:3001/shortener`, {
-      fetch(`https://app-shortify.wedeploy.io/shortener`, {
+      fetch(`https://app-shortify.herokuapp.com/shortener`, {
           method: 'POST',
           headers: new Headers({
             'Content-Type': 'application/json'
@@ -116,6 +123,15 @@
         })
         .catch(err => console.error('erro', err));
     });
+
+    const showError = function(msg) {
+      document.querySelector('#error').innerHTML = msg;
+      notification.classList.remove('hide');
+    }
+
+    const hideError = function() {
+      notification.classList.add('hide');
+    }
   </script>
 </body>
 </html>

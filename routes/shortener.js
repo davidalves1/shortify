@@ -2,13 +2,14 @@ const Shortener = require('../models/shortener');
 const db = require('../config/database');
 const config = require('../config/index');
 const randomHash = require('random-hash');
+const helpers = require('../support/helpers');
 
 module.exports = server => {
   server.get('/:hash', async (req, res, next) => {
     try{
       Shortener.findOne({code: req.params.hash}, (err, url) => {
         if (err || url === null) {
-          console.error('api error', err);
+          console.error('api error', err, req.params.hash);
           res.redirect(301, `${config.base_url}?code=404`, next);
           return;
         }
@@ -17,7 +18,7 @@ module.exports = server => {
       })
     } catch (err) {
       res.status(500);
-      return res.json({error: 'Deu erro'});
+      return res.json({ err });
     }
   });
 
@@ -49,8 +50,23 @@ module.exports = server => {
       });
     } catch (err) {
       res.status(500);
-      return res.json({err});
+      return res.json({ err });
     }
+  });
+
+  server.get('/shortener', async (req, res) => {
+    const url = req.params.url;
+
+    const is_valid = helpers.checkUrl(url);
+
+    console.log(url, is_valid);
+
+    if (!is_valid) {
+      res.status(422);
+      return res.json({ is_valid });
+    }
+
+    return res.json({is_valid});
   });
 }
 
