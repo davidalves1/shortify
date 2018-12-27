@@ -98,8 +98,10 @@
 
     mainForm.addEventListener('submit', async (ev) => {
       ev.preventDefault();
+      hideResult();
       hideError();
 
+      // const is_valid = await fetch(`http://localhost:3001/shortener?url=${url.value}`);
       const is_valid = await fetch(`https://app-shortify.herokuapp.com/shortener?url=${url.value}`);
 
       if (is_valid.status !== 200) {
@@ -118,7 +120,7 @@
         })
         .then(res => res.json())
         .then(json => {
-          resultDiv.classList.remove('hide');
+          showResult();
           result.value = json.shorten
         })
         .catch(err => console.error('erro', err));
@@ -131,6 +133,14 @@
 
     const hideError = function() {
       notification.classList.add('hide');
+    }
+
+    const showResult = function() {
+      resultDiv.classList.remove('hide');
+    }
+
+    const hideResult = function() {
+      resultDiv.classList.add('hide');
     }
   </script>
 </body>

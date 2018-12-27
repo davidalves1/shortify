@@ -1,7 +1,7 @@
 const Shortener = require('../models/shortener');
+const randomHash = require('random-hash');
 const db = require('../config/database');
 const config = require('../config/index');
-const randomHash = require('random-hash');
 const helpers = require('../support/helpers');
 
 module.exports = server => {
@@ -58,8 +58,6 @@ module.exports = server => {
     const url = req.params.url;
 
     const is_valid = helpers.checkUrl(url);
-
-    console.log(url, is_valid);
 
     if (!is_valid) {
       res.status(422);
