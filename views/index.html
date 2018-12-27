@@ -111,7 +111,7 @@
       hideError();
 
       // const is_valid = await fetch(`http://localhost:3001/shortener?url=${url.value}`);
-      const is_valid = await fetch(`https://app-shosrtify.herokuapp.com/shortener?url=${url.value}`);
+      const is_valid = await fetch(`https://app-shortify.herokuapp.com/shortener?url=${url.value}`);
 
       if (is_valid.status !== 200) {
         return showError('A URL informada não é válida');
