@@ -24,6 +24,15 @@
       display: none !important;
     }
   </style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80709808-5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-80709808-5');
+  </script>
 </head>
 <body>
   <section class="section">
@@ -102,7 +111,7 @@
       hideError();
 
       // const is_valid = await fetch(`http://localhost:3001/shortener?url=${url.value}`);
-      const is_valid = await fetch(`https://app-shortify.herokuapp.com/shortener?url=${url.value}`);
+      const is_valid = await fetch(`https://app-shosrtify.herokuapp.com/shortener?url=${url.value}`);
 
       if (is_valid.status !== 200) {
         return showError('A URL informada não é válida');
