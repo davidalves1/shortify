@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80709808-5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-80709808-5');
+  </script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shortfy</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   <style>
     .title {
       text-align: center;
@@ -24,15 +32,6 @@
       display: none !important;
     }
   </style>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80709808-5"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'UA-80709808-5');
-  </script>
 </head>
 <body>
   <section class="section">
@@ -111,7 +110,7 @@
       notification.classList.add('hide');
 
       // const is_valid = await fetch(`http://localhost:3001/shortener?url=${url.value}`);
-      const is_valid = await fetch(`https://app-shortify.herokuapp.com/shortener?url=${url.value}`);
+      const is_valid = await fetch(`https://shortify.me/shortener?url=${url.value}`);
 
       if (is_valid.status !== 200) {
         return showError('A URL informada não é válida');
@@ -120,7 +119,7 @@
       const data = {url: url.value};
 
       // fetch(`http://localhost:3001/shortener`, {
-      fetch(`https://app-shortify.herokuapp.com/shortener`, {
+      fetch(`https://shortify.me/shortener`, {
           method: 'POST',
           headers: new Headers({
             'Content-Type': 'application/json'
