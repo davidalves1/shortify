@@ -102,13 +102,13 @@
     });
 
     notificationClose.addEventListener('click', () => {
-      hideError();
+      notification.classList.add('hide');
     });
 
     mainForm.addEventListener('submit', async (ev) => {
       ev.preventDefault();
-      hideResult();
-      hideError();
+      resultDiv.classList.add('hide');
+      notification.classList.add('hide');
 
       // const is_valid = await fetch(`http://localhost:3001/shortener?url=${url.value}`);
       const is_valid = await fetch(`https://app-shortify.herokuapp.com/shortener?url=${url.value}`);
@@ -129,7 +129,7 @@
         })
         .then(res => res.json())
         .then(json => {
-          showResult();
+          resultDiv.classList.remove('hide');
           result.value = json.shorten
         })
         .catch(err => console.error('erro', err));
@@ -138,18 +138,6 @@
     const showError = function(msg) {
       document.querySelector('#error').innerHTML = msg;
       notification.classList.remove('hide');
-    }
-
-    const hideError = function() {
-      notification.classList.add('hide');
-    }
-
-    const showResult = function() {
-      resultDiv.classList.remove('hide');
-    }
-
-    const hideResult = function() {
-      resultDiv.classList.add('hide');
     }
   </script>
 </body>

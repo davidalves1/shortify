@@ -46,7 +46,7 @@ module.exports = server => {
           return res.json({ err });
         }
 
-        return res.json({ shorten });
+        return res.json({ ...data });
       });
     } catch (err) {
       res.status(500);
