@@ -109,8 +109,10 @@
       resultDiv.classList.add('hide');
       notification.classList.add('hide');
 
+      const shortenerUrl = 'https://shortify.me/shortener';
+
       // const is_valid = await fetch(`http://localhost:3001/shortener?url=${url.value}`);
-      const is_valid = await fetch(`https://shortify.me/shortener?url=${url.value}`);
+      const is_valid = await fetch(`${shortenerUrl}?url=${url.value}`);
 
       if (is_valid.status !== 200) {
         return showError('A URL informada não é válida');
@@ -119,7 +121,7 @@
       const data = {url: url.value};
 
       // fetch(`http://localhost:3001/shortener`, {
-      fetch(`https://shortify.me/shortener`, {
+      fetch(shortenerUrl, {
           method: 'POST',
           headers: new Headers({
             'Content-Type': 'application/json'
